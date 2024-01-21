@@ -56,7 +56,7 @@ public class PugTemplateEngineImpl extends CachingTemplateEngine<PugTemplate> im
 
   public PugTemplateEngineImpl(Vertx vertx, String extension, String encoding) {
     super(vertx, extension);
-    config.setTemplateLoader(new PugTemplateLoader(vertx));
+    config.setTemplateLoader(new PugTemplateLoader(vertx, extension));
     config.setCaching(false);
     this.encoding = Charset.forName(encoding);
   }
@@ -88,9 +88,11 @@ public class PugTemplateEngineImpl extends CachingTemplateEngine<PugTemplate> im
   private class PugTemplateLoader implements TemplateLoader {
 
     private final Vertx vertx;
+    private final String extension;
 
-    PugTemplateLoader(Vertx vertx) {
+    PugTemplateLoader(Vertx vertx, String extension) {
       this.vertx = vertx;
+      this.extension = extension;
     }
 
     @Override
